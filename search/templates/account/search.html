@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="album py-5 bg-light">
+<center>
+    <a type="button" href="{% url 'youtube' %}" class="btn btn-sm btn-outline-secondary">Home</a>
+    <a type="button" href="{% url 'favorite' %}" class="btn btn-sm btn-outline-secondary">Profile</a>
+</center>
+    <div class="container">
+      <div class="row">
+        {% for video in videos %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+              <img class="bd-placeholder-img card-img-top" src="{{ video.thumbnail }}" width="900px" , height="300px"/>
+                <div class="card-body">
+                    <a href="{{ video.url }}"><p class="card-text">{{ video.title }}</p></a>
+                <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ video.duration }} mins</small>
+                    {% if request.user.is_authenticated %}
+                        <a type="button" href="{% url 'cart' pk=video.id %}" class="btn btn-sm btn-outline-secondary">Add to favorites</a>
+                    {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+</div>
+</body>
+</html>
